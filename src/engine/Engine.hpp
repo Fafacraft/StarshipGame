@@ -36,7 +36,7 @@ public:
 
     /// @brief Sets the current screen (e.g., main menu, gameplay, etc.)
     /// @param screen 
-    void setScreen(Screen* screen) { m_currentScreen = screen; }
+    void setScreen(Screen* screen);
 
 private:
     /// @brief Flag to indicate if the engine is running

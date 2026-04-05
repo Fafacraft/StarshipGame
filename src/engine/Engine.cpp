@@ -60,6 +60,7 @@ void Engine::shutdown() {
     }
 
     SDL_Quit();
+    m_running = false;
     std::cout << "Engine shutdown complete\n";
 }
 
@@ -87,4 +88,11 @@ void Engine::render() {
 
 bool Engine::isRunning() const {
     return m_running;
+}
+
+void Engine::setScreen(Screen* screen) {
+    m_currentScreen = screen;
+    if (m_currentScreen) {
+        m_currentScreen->setEngine(this);  // give the screen a reference to the engine
+    }
 }
