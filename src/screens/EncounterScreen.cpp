@@ -19,20 +19,13 @@ void EncounterScreen::render() {
     glEnd();
 }
 
-void EncounterScreen::handleEvents() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            engine->shutdown();  // call shutdown to clean up and exit
-        }
-
-        if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-                // For now, just go back to the menu screen when Escape is pressed
-                static MainMenuScreen menu;
-                menu.setEngine(engine);
-                engine->setScreen(&menu);
-            }
+void EncounterScreen::handleEvents(const SDL_Event& event) {
+    if (event.type == SDL_KEYDOWN) {
+        if (event.key.keysym.sym == SDLK_ESCAPE) {
+            // For now, just go back to the menu screen when Escape is pressed
+            static MainMenuScreen menu;
+            menu.setEngine(engine);
+            engine->setScreen(&menu);
         }
     }
 }

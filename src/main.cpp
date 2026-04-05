@@ -32,7 +32,5 @@ int main() {
         engine.render();
     }
 
-    // Clean up and exit
-    engine.shutdown();
     return 0;
 }
