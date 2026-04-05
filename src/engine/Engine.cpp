@@ -67,7 +67,20 @@ void Engine::shutdown() {
 void Engine::handleEvents() {
     // Here we will poll for SDL events (like keyboard input, mouse movement, window events, etc.) and handle them accordingly.
     // Create an SDL_Event to hold event data
-    if (m_currentScreen) m_currentScreen->handleEvents();
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event)) {
+        // GLOBAL events handled here
+        if (event.type == SDL_QUIT) {
+            m_running = false;
+            continue; // no need to forward
+        }
+
+        // Forward to current screen
+        if (m_currentScreen) {
+            m_currentScreen->handleEvents(event);
+        }
+    }
 }
 
 void Engine::update(float dt) {

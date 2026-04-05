@@ -40,27 +40,21 @@ void MainMenuScreen::render() {
     glEnd();
 }
 
-void MainMenuScreen::handleEvents() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            engine->shutdown();  // call shutdown to clean up and exit
-        }
-        if (event.type == SDL_MOUSEBUTTONDOWN) {
-            int x = event.button.x;
-            int y = event.button.y;
-            std::cout << "Click at: " << x << "," << y << "\n";
-            // Later: check if click inside button bounds
+void MainMenuScreen::handleEvents(const SDL_Event& event) {
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        int x = event.button.x;
+        int y = event.button.y;
+        std::cout << "Click at: " << x << "," << y << "\n";
+        // Later: check if click inside button bounds
 
-            // convert pixel coordinates to normalized OpenGL coords if needed
-            float nx = (x / 400.0f) - 1.0f;  // example for 800x600 window
-            float ny = 1.0f - (y / 300.0f);
+        // convert pixel coordinates to normalized OpenGL coords if needed
+        float nx = (x / 400.0f) - 1.0f;  // example for 800x600 window
+        float ny = 1.0f - (y / 300.0f);
 
-            // Call onClick if hit button
-            for(auto& b : buttons) {
-                if(b->isClicked(nx, ny)) {
-                    b->onClick();
-                }
+        // Call onClick if hit button
+        for(auto& b : buttons) {
+            if(b->isClicked(nx, ny)) {
+                b->onClick();
             }
         }
     }

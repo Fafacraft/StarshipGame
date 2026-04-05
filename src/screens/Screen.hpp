@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Button.hpp"
+#include <SDL.h>
 
 // Forward declaration instead of #include "Engine.hpp" to avoid circular dependency
 class Engine;
@@ -17,7 +18,7 @@ public:
     virtual void render() = 0;
 
     /// @brief Handle SDL events
-    virtual void handleEvents() {}
+    virtual void handleEvents(const SDL_Event& event) {}
 
     void setEngine(Engine* e) { engine = e; }
 
