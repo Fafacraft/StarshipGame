@@ -1,5 +1,7 @@
 Prototype of a game on SDL_2
 
+Made with OpenGL
+
 # Cmake Commands
 First time or when updated dependencies : 
 `cmake -B build -S .`
