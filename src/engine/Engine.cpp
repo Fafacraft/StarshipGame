@@ -1,5 +1,7 @@
 #include "Engine.hpp"
 #include <iostream>
+#include "MainMenuScreen.hpp"
+#include <SDL_opengl.h>
 
 // Constructor
 Engine::Engine() {}
@@ -64,25 +66,22 @@ void Engine::shutdown() {
 void Engine::handleEvents() {
     // Here we will poll for SDL events (like keyboard input, mouse movement, window events, etc.) and handle them accordingly.
     // Create an SDL_Event to hold event data
-    SDL_Event event;
-
-    while (SDL_PollEvent(&event)) {
-        // Check if the event is a quit event (e.g., window close), and if so, set m_running to false to exit the main loop
-        if (event.type == SDL_QUIT) {
-            m_running = false;
-        }
-    }
+    if (m_currentScreen) m_currentScreen->handleEvents();
 }
 
 void Engine::update(float dt) {
-    // For now: nothing
     // Later: ECS systems update here
     // Game logic, physics, AI, etc. will be updated here based on the delta time (dt) since the last frame
+
+    // Update the current screen if it exists
+    if (m_currentScreen) m_currentScreen->update(dt);
 }
 
 void Engine::render() {
-    // todo: clear the screen and draw stuff here
-    // For now: just swap buffers (OpenGL has two buffers - front and back. We render to the back buffer while the front buffer is being displayed, and then swap them to display the new frame)
+    // Render the current screen if it exists
+    if (m_currentScreen) m_currentScreen->render();
+
+    // swap buffers (OpenGL has two buffers - front and back. We render to the back buffer while the front buffer is being displayed, and then swap them to display the new frame)
     SDL_GL_SwapWindow(m_window);
 }
 

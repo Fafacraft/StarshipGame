@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include "Screen.hpp"
 
 class Engine {
 public:
@@ -33,6 +34,10 @@ public:
     /// @return True if the engine is running, false otherwise
     bool isRunning() const;
 
+    /// @brief Sets the current screen (e.g., main menu, gameplay, etc.)
+    /// @param screen 
+    void setScreen(Screen* screen) { m_currentScreen = screen; }
+
 private:
     /// @brief Flag to indicate if the engine is running
     bool m_running = false;
@@ -41,4 +46,7 @@ private:
     SDL_Window* m_window = nullptr;
     /// @brief SDL OpenGL context associated with the window
     SDL_GLContext m_glContext = nullptr;
+
+    /// @brief Pointer to the current screen being displayed (e.g., main menu, gameplay, etc.)
+    Screen* m_currentScreen = nullptr;
 };

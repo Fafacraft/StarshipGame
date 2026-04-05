@@ -34,15 +34,18 @@ FetchContent_MakeAvailable(entt)
 add_executable(StarshipGame
     src/main.cpp
     src/engine/Engine.cpp
+    src/screens/MainMenuScreen.cpp
+)
+
+# Tell compiler where to find headers
+target_include_directories(StarshipGame PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/engine
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/screens
 )
 
 # Link SDL2
-target_link_libraries(StarshipGame PRIVATE SDL2::SDL2)
+target_link_libraries(StarshipGame PRIVATE SDL2::SDL2 opengl32)
 
-# Include EnTT
-target_include_directories(StarshipGame PRIVATE
-    ${entt_SOURCE_DIR}/src
-)
 
 # Copy SDL2 DLLs to the output directory on Windows
 add_custom_command(TARGET StarshipGame POST_BUILD

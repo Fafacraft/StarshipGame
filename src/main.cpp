@@ -1,7 +1,8 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 
-#include "engine/Engine.hpp"
+#include "Engine.hpp"
+#include "MainMenuScreen.hpp"
 
 int main() {
     // On Windows, SDL redefines main to SDL_main, which can cause issues with our main function.
@@ -12,6 +13,10 @@ int main() {
     if (!engine.init("StarshipGame", 800, 600)) {
         return -1;
     }
+
+    // Create the main menu screen and set it as the current screen in the engine at the start of the game
+    MainMenuScreen menu;
+    engine.setScreen(&menu);
 
     // Main game loop
     Uint32 lastTime = SDL_GetTicks();
