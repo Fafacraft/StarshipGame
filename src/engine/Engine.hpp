@@ -17,9 +17,6 @@ public:
     /// @return True if initialization was successful, false otherwise
     bool init(const char* title, int width, int height);
 
-    /// @brief Shuts down the engine and cleans up resources
-    void shutdown();
-
     /// @brief Handles input events
     void handleEvents();
 
@@ -38,7 +35,13 @@ public:
     /// @param screen 
     void setScreen(Screen* screen);
 
+    /// @brief Stop the engine and exit the game loop
+    void stop() { m_running = false; }
+
 private:
+    /// @brief Shuts down the engine and cleans up resources, for deconstructor
+    void shutdown();
+
     /// @brief Flag to indicate if the engine is running
     bool m_running = false;
 
