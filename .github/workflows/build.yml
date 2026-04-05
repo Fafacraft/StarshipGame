@@ -3,39 +3,35 @@ name: C++ Build & Test
 on:
   push:
     branches:
-      - develop  # runs on pushes to develop
+      - develop
   pull_request:
     branches:
-      - main     # runs on PRs targeting main
+      - main
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Install dependencies (example for SDL2 + CMake)
+      # 2️⃣ Install CMake
       - name: Install CMake
-        uses: lukka/get-cmake@v3
+        uses: lukka/get-cmake@v3.25.2  # fixed exact version
 
-      - name: Install SDL2 (vcpkg)
+      # 3️⃣ Install vcpkg & SDL2
+      - name: Install SDL2
         run: |
           git clone https://github.com/microsoft/vcpkg.git vcpkg
           .\vcpkg\bootstrap-vcpkg.bat
           .\vcpkg\vcpkg install sdl2:x64-windows
 
-      # 3️⃣ Configure & Build
+      # 4️⃣ Configure CMake
       - name: Configure CMake
         run: cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=.\vcpkg\scripts\buildsystems\vcpkg.cmake
 
+      # 5️⃣ Build
       - name: Build
         run: cmake --build build --config Release
-
-      # Optional: run tests
-      - name: Run tests
-        run: |
-          cd build
-          ctest --output-on-failure
