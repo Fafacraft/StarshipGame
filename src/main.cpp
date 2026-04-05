@@ -1,43 +1,33 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
-#include <iostream>
+
+#include "engine/Engine.hpp"
 
 int main() {
+    // On Windows, SDL redefines main to SDL_main, which can cause issues with our main function.
     SDL_SetMainReady();
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cout << "SDL Init failed\n";
-        return 1;
+
+    // Initialize the engine and create the window
+    Engine engine;
+    if (!engine.init("StarshipGame", 800, 600)) {
+        return -1;
     }
 
-    SDL_Window* window = SDL_CreateWindow(
-        "StarshipGame",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        800, 600,
-        SDL_WINDOW_OPENGL
-    );
+    // Main game loop
+    Uint32 lastTime = SDL_GetTicks();
+    while (engine.isRunning()) {
+        // Calculate delta time (time since last frame)
+        Uint32 currentTime = SDL_GetTicks();
+        float dt = (currentTime - lastTime) / 1000.0f;
+        lastTime = currentTime;
 
-    if (!window) {
-        std::cout << "Window creation failed\n";
-        return 1;
+        // Handle events, update game state, and render
+        engine.handleEvents();
+        engine.update(dt);
+        engine.render();
     }
 
-    SDL_GLContext glContext = SDL_GL_CreateContext(window);
-
-    bool running = true;
-    SDL_Event event;
-
-    while (running) {
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
-                running = false;
-        }
-
-        SDL_GL_SwapWindow(window);
-    }
-
-    SDL_GL_DeleteContext(glContext);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    // Clean up and exit
+    engine.shutdown();
     return 0;
 }

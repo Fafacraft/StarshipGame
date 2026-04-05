@@ -33,6 +33,7 @@ FetchContent_MakeAvailable(entt)
 # -------------------------
 add_executable(StarshipGame
     src/main.cpp
+    src/engine/Engine.cpp
 )
 
 # Link SDL2
