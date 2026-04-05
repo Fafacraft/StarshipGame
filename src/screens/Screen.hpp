@@ -1,4 +1,9 @@
 #pragma once
+#include <vector>
+#include "Button.hpp"
+
+// Forward declaration instead of #include "Engine.hpp" to avoid circular dependency
+class Engine;
 
 /// @brief Base class for different game screens (e.g., main menu, gameplay, pause menu)
 class Screen {
@@ -13,4 +18,10 @@ public:
 
     /// @brief Handle SDL events
     virtual void handleEvents() {}
+
+    void setEngine(Engine* e) { engine = e; }
+
+protected:
+    Engine* engine = nullptr;  // pointer to Engine to control running or switch screens
+    std::vector<Button*> buttons;  // list of buttons on this screen (if any)
 };

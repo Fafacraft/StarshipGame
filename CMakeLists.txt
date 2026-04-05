@@ -35,12 +35,16 @@ add_executable(StarshipGame
     src/main.cpp
     src/engine/Engine.cpp
     src/screens/MainMenuScreen.cpp
+    src/screens/EncounterScreen.cpp
+    src/component/ui/Button.cpp
+    src/component/ui/PlayButton.cpp
 )
 
 # Tell compiler where to find headers
 target_include_directories(StarshipGame PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/engine
     ${CMAKE_CURRENT_SOURCE_DIR}/src/screens
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/component/ui
 )
 
 # Link SDL2
