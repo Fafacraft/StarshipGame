@@ -16,6 +16,9 @@ build
 vscode/
 cache/
 clangd/
+*.idea/
+
+
 # Compiled object files
 *.o
 *.obj
