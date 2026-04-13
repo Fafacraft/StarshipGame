@@ -9,7 +9,11 @@
 MainMenuScreen::MainMenuScreen() {
     // Initialize any menu-specific resources here (e.g., load button textures)
     // Create the play button
-    PlayButton* playButton = new PlayButton(0.0f, 0.0f, 0.4f, 0.2f, "Play");
+    PlayButton* playButton = new PlayButton(
+    400.0f, 300.0f,   // center of 800x600
+    200.0f, 80.0f,    // width/height in pixels
+    "Play"
+    );
 
     // Set what happens when clicked
     playButton->onClick = [this]() {
@@ -31,13 +35,9 @@ void MainMenuScreen::render() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Draw Play button (simple quad for now)
-    glColor3f(0.8f, 0.8f, 0.2f);
-    glBegin(GL_QUADS);
-        glVertex2f(-0.2f, 0.1f);
-        glVertex2f(0.2f, 0.1f);
-        glVertex2f(0.2f, -0.1f);
-        glVertex2f(-0.2f, -0.1f);
-    glEnd();
+    for (auto& b : buttons) {
+        b->render();
+    }
 }
 
 void MainMenuScreen::handleEvents(const SDL_Event& event) {
@@ -47,13 +47,9 @@ void MainMenuScreen::handleEvents(const SDL_Event& event) {
         std::cout << "Click at: " << x << "," << y << "\n";
         // Later: check if click inside button bounds
 
-        // convert pixel coordinates to normalized OpenGL coords if needed
-        float nx = (x / 400.0f) - 1.0f;  // example for 800x600 window
-        float ny = 1.0f - (y / 300.0f);
-
         // Call onClick if hit button
         for(auto& b : buttons) {
-            if(b->isClicked(nx, ny)) {
+            if(b->isClicked(x, y)) {
                 b->onClick();
             }
         }
