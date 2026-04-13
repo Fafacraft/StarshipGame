@@ -11,12 +11,6 @@ void EncounterScreen::render() {
 
     // placeholder: green screen
     glColor3f(0.0f, 1.0f, 0.0f);
-    glBegin(GL_QUADS);
-        glVertex2f(-0.5f, 0.5f);
-        glVertex2f(0.5f, 0.5f);
-        glVertex2f(0.5f, -0.5f);
-        glVertex2f(-0.5f, -0.5f);
-    glEnd();
 }
 
 void EncounterScreen::handleEvents(const SDL_Event& event) {

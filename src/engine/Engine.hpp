@@ -35,6 +35,11 @@ public:
     /// @param screen 
     void setScreen(Screen* screen);
 
+    /// @brief Handles window resize events
+    /// @param width The new width of the window
+    /// @param height The new height of the window
+    void onResize(int width, int height);
+
     /// @brief Stop the engine and exit the game loop
     void stop() { m_running = false; }
 

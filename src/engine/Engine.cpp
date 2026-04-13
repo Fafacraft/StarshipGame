@@ -26,13 +26,15 @@ bool Engine::init(const char* title, int width, int height) {
         SDL_WINDOWPOS_CENTERED,
         width,
         height,
-        SDL_WINDOW_OPENGL
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED
     );
 
     if (!m_window) {
         std::cout << "Window creation failed\n";
         return false;
     }
+
+    onResize(width, height); // Set initial viewport and projection
 
     // Create an OpenGL context associated with the window
     m_glContext = SDL_GL_CreateContext(m_window);
@@ -76,6 +78,15 @@ void Engine::handleEvents() {
             continue; // no need to forward
         }
 
+        if (event.type == SDL_WINDOWEVENT) {
+            if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+                // Handle window resize if needed (e.g., adjust viewport)
+                int newWidth = event.window.data1;
+                int newHeight = event.window.data2;
+                onResize(newWidth, newHeight);
+            }
+        }
+
         // Forward to current screen
         if (m_currentScreen) {
             m_currentScreen->handleEvents(event);
@@ -108,4 +119,17 @@ void Engine::setScreen(Screen* screen) {
     if (m_currentScreen) {
         m_currentScreen->setEngine(this);  // give the screen a reference to the engine
     }
+    std::cout << "Screen set to: " << (screen ? typeid(*screen).name() : "None") << "\n";
+}
+
+void Engine::onResize(int width, int height) {
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, width, height, 0, -1, 1);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    std::cout << "Window resized to: " << width << "x" << height << "\n";
 }
