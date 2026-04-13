@@ -5,5 +5,5 @@ class PlayButton : public Button {
 public:
     using Button::Button; // inherit constructor
 
-    void render() override; 
+    void render(int windowWidth, int windowHeight) override; 
 };

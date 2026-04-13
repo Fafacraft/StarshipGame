@@ -5,14 +5,15 @@
 #include "Engine.hpp"
 #include "EncounterScreen.hpp"
 #include "PlayButton.hpp"
+#include "Anchor.hpp"
 
 MainMenuScreen::MainMenuScreen() {
     // Initialize any menu-specific resources here (e.g., load button textures)
     // Create the play button
     PlayButton* playButton = new PlayButton(
-    400.0f, 300.0f,   // center of 800x600
-    200.0f, 80.0f,    // width/height in pixels
-    "Play"
+    0.0f, 0.0f, 200.0f, 80.0f,
+    "Play",
+    Anchor::CENTER
     );
 
     // Set what happens when clicked
@@ -36,7 +37,7 @@ void MainMenuScreen::render() {
 
     // Draw Play button (simple quad for now)
     for (auto& b : buttons) {
-        b->render();
+        b->render(engine->getWindowWidth(), engine->getWindowHeight());
     }
 }
 
@@ -49,7 +50,7 @@ void MainMenuScreen::handleEvents(const SDL_Event& event) {
 
         // Call onClick if hit button
         for(auto& b : buttons) {
-            if(b->isClicked(x, y)) {
+            if(b->isClicked(x, y, engine->getWindowWidth(), engine->getWindowHeight())) {
                 b->onClick();
             }
         }
