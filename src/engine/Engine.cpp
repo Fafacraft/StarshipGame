@@ -131,5 +131,8 @@ void Engine::onResize(int width, int height) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    m_windowWidth = width;
+    m_windowHeight = height;
     std::cout << "Window resized to: " << width << "x" << height << "\n";
 }

@@ -43,6 +43,17 @@ public:
     /// @brief Stop the engine and exit the game loop
     void stop() { m_running = false; }
 
+    int getWindowWidth() {
+        return m_windowWidth;
+    }
+    int getWindowHeight() {
+        return m_windowHeight;
+    }
+
+    void setWindowSize(int width, int height) {
+        onResize(width, height);
+    }
+
 private:
     /// @brief Shuts down the engine and cleans up resources, for deconstructor
     void shutdown();
@@ -57,4 +68,7 @@ private:
 
     /// @brief Pointer to the current screen being displayed (e.g., main menu, gameplay, etc.)
     Screen* m_currentScreen = nullptr;
+
+    int m_windowWidth = 800;  // default width
+    int m_windowHeight = 600; // default height
 };
